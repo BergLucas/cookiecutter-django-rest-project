@@ -1,0 +1,11 @@
+{
+  "project_name": "example-project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "description": "{{ cookiecutter.project_name }} is a project.",
+  "author_name": "John Doe",
+  "author_email": "john.doe@example.com",
+  "version": "0.1.0",
+  "repo_url": "https://repo.example.com",
+  "downloads_url": "{{ cookiecutter.repo_url }}/releases",
+  "license_url": "{{ cookiecutter.repo_url }}/blob/main/LICENSE"
+}

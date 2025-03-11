@@ -1,0 +1,73 @@
+[project]
+name = "{{ cookiecutter.project_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.description }}"
+authors = [
+    { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" },
+]
+readme = "README.md"
+license = "MIT"
+keywords = ["Poetry", "{{ cookiecutter.project_slug }}"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+]
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.poetry]
+requires-poetry = "^2.0.0"
+packages = [{ include = "{{cookiecutter.project_slug}}" }]
+
+[tool.poetry.requires-plugins]
+poethepoet = "^0.33.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.10"
+mypy = "^1.15.0"
+coverage = "^7.6.12"
+
+[tool.poe.tasks]
+test = "python -m unittest -v"
+coverage = "coverage run -m unittest -v"
+coverage-report = ["coverage", { cmd = "coverage report" }]
+coverage-html = ["coverage", { cmd = "coverage html" }]
+format = "ruff format src"
+check = "ruff check --fix src"
+check-nofix = "ruff check src"
+check-unsafe = "ruff check --fix --unsafe src"
+typecheck = "mypy src"
+lint = ["format", "check", "typecheck"]
+
+[tool.coverage.run]
+branch = true
+source = ["{{ cookiecutter.project_slug }}", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "D",   # pydocstyle
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "N",   # pep8-naming
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "S",   # flake8-bandit
+    "TCH", # flake8-type-checking
+    "Q",   # flake8-quotes
+    "PL",  # pylint
+]
+
+ignore = ["D100", "D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
