@@ -52,4 +52,4 @@ You can create a super user by running the following command:
 
 ## License
 
-All code is licensed for others under a MIT license (see [LICENSE]({{ cookiecutter.repo_url }}/blob/main/LICENSE)).
+All code is licensed for others under a MIT license (see [LICENSE]({{ cookiecutter.license_url }})).
