@@ -18,7 +18,7 @@ dependencies = []
 
 [tool.poetry]
 requires-poetry = "^2.0.0"
-packages = [{ include = "{{cookiecutter.project_slug}}" }]
+packages = [{ include = "{{cookiecutter.project_slug}}", from = "src" }]
 
 [tool.poetry.requires-plugins]
 poethepoet = "^0.33.0"
@@ -42,7 +42,7 @@ lint = ["format", "check", "typecheck"]
 
 [tool.coverage.run]
 branch = true
-source = ["{{ cookiecutter.project_slug }}", "tests"]
+source = ["src/{{ cookiecutter.project_slug }}", "tests"]
 
 [tool.ruff.lint]
 select = [
