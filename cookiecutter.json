@@ -5,7 +5,10 @@
   "author_name": "John Doe",
   "author_email": "john.doe@example.com",
   "version": "0.1.0",
+  "dockerhub_namespace": "johndoe",
   "repo_url": "https://repo.example.com",
   "downloads_url": "{{ cookiecutter.repo_url }}/releases",
-  "license_url": "{{ cookiecutter.repo_url }}/blob/main/LICENSE"
+  "license_url": "{{ cookiecutter.repo_url }}/blob/main/LICENSE",
+  "sysadmindoc_url": "https://docs.example.com",
+  "devdoc_url": "https://developer.example.com"
 }

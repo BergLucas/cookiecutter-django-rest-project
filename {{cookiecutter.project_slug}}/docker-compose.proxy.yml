@@ -1,0 +1,23 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.3
+    command:
+      - --accesslog=true
+      - --providers.docker
+      # - --api.insecure=true
+      # - --entrypoints.web.address=:80
+      # - --certificatesresolvers.letsencrypt.acme.email=${LETS_ENCRYPT_EMAIL?Missing let's encrypt email}
+      # - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      # - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+    ports:
+      - 80:80
+      # - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web_network
+
+networks:
+  web_network:
+    name: web_network
+    external: false

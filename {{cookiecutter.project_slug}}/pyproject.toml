@@ -7,14 +7,34 @@ authors = [
 ]
 readme = "README.md"
 license = "MIT"
-keywords = ["Poetry", "{{ cookiecutter.project_slug }}"]
+keywords = ["Django", "Poetry", "{{ cookiecutter.project_slug }}"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Framework :: Django :: 4.2",
     "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
 ]
-requires-python = ">=3.11"
-dependencies = []
+requires-python = ">=3.11,<4"
+dependencies = [
+    "django (>=5.1.7,<6.0.0)",
+    "djangorestframework (>=3.15.2,<4.0.0)",
+    "djangorestframework-simplejwt (>=5.5.0,<6.0.0)",
+    "django-cors-headers (>=4.7.0,<5.0.0)",
+    "django-filter (>=25.1,<26.0)",
+    "django-environ (>=0.12.0,<0.13.0)",
+    "drf-extensions (>=0.7.1,<0.8.0)",
+    "drf-spectacular (>=0.28.0,<0.29.0)",
+    "psycopg (>=3.2.5,<4.0.0)",
+]
+
+[project.optional-dependencies]
+gunicorn = ["gunicorn (>=23.0.0,<24.0.0)"]
+waitress = ["waitress (>=3.0.2,<4.0.0)"]
+c = ["psycopg[c] (>=3.2.5,<4.0.0)"]
+
+
+[project.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}:main"
 
 [tool.poetry]
 requires-poetry = "^2.0.0"
@@ -22,13 +42,25 @@ packages = [{ include = "{{cookiecutter.project_slug}}", from = "src" }]
 
 [tool.poetry.requires-plugins]
 poethepoet = "^0.33.0"
+poetry-bumpversion = "^0.3.3"
+poetry-plugin-export = "^1.9.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.10"
 mypy = "^1.15.0"
 coverage = "^7.6.12"
+psycopg = { extras = ["binary"], version = "^3.2.5" }
+django-stubs = { extras = ["compatible-mypy"], version = "^5.1.3" }
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
+sphinx-multiproject = "^1.0.0"
+sphinx-autobuild = "^2024.10.3"
+rstcheck = "^6.2.4"
 
 [tool.poe.tasks]
+dev = "python manage.py runserver"
 test = "python -m unittest -v"
 coverage = "coverage run -m unittest -v"
 coverage-report = ["coverage", { cmd = "coverage report" }]
@@ -39,6 +71,47 @@ check-nofix = "ruff check src"
 check-unsafe = "ruff check --fix --unsafe src"
 typecheck = "mypy src"
 lint = ["format", "check", "typecheck"]
+migrate = "python manage.py migrate"
+makemigrations = "python manage.py makemigrations"
+createsuperuser = "python manage.py createsuperuser"
+dev-docker = "docker compose up"
+bash-docker = "docker compose exec api bash"
+clean.shell = "rm -rf dist"
+build-docker.shell = "docker compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.build.yml build && mkdir -p dist/docker && docker compose -f docker-compose.yml -f docker-compose.prod.yml convert > dist/docker/docker-compose.yml && docker save {{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }} -o dist/docker/{{ cookiecutter.project_slug }}_v{{ cookiecutter.version }}.tar"
+
+[tool.poe.tasks.build-docs]
+cmd = "sphinx-build -M $target docs docs/_build/$PROJECT"
+args = [
+    { name = "PROJECT", options = [
+        "-p",
+        "--project",
+    ], default = "sysadmin" },
+    { name = "target", positional = true, default = "help" },
+]
+
+[tool.poe.tasks.livehtml-docs]
+cmd = "sphinx-autobuild --port $port docs docs/_build/$PROJECT/html"
+args = [
+    { name = "PROJECT", options = [
+        "-p",
+        "--project",
+    ], default = "sysadmin" },
+    { name = "port", options = [
+        "--port",
+    ], default = "8080" },
+]
+
+[tool.poetry_bumpversion.file."pyproject.toml"]
+search = 'docker save {{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{current_version} -o dist/docker/{{ cookiecutter.project_slug }}_v{current_version}.tar'
+replace = 'docker save {{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{new_version} -o dist/docker/{{ cookiecutter.project_slug }}_v{new_version}.tar'
+
+[tool.poetry_bumpversion.file."docker-compose.yml"]
+search = '{{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{current_version}'
+replace = '{{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{new_version}'
+
+[tool.poetry_bumpversion.file."src/{{ cookiecutter.project_slug }}/settings.py"]
+search = '"VERSION": "{current_version}"'
+replace = '"VERSION": "{new_version}"'
 
 [tool.coverage.run]
 branch = true
@@ -55,6 +128,7 @@ select = [
     "C",   # flake8-comprehensions
     "B",   # flake8-bugbear
     "S",   # flake8-bandit
+    "DJ",  # flake8-django
     "TCH", # flake8-type-checking
     "Q",   # flake8-quotes
     "PL",  # pylint
@@ -67,6 +141,10 @@ convention = "google"
 
 [tool.mypy]
 ignore_missing_imports = true
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "{{ cookiecutter.project_slug }}.settings"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

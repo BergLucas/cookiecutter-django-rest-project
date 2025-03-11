@@ -1,0 +1,21 @@
+name: {{ cookiecutter.project_slug }}
+services:
+  api:
+    image: {{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }}
+    networks:
+      - backend_network
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17.4-alpine3.21
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
+
+volumes:
+  db_data:
+
+networks:
+  backend_network:

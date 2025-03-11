@@ -1,5 +1,7 @@
 # {{ cookiecutter.project_name }} Documentation
 
+- **Developer documentation:** {{cookiecutter.devdoc_url}}
+
 ## Cloning the project
 
 You can clone the repository using the following command:
@@ -7,6 +9,37 @@ You can clone the repository using the following command:
 ```bash
 git clone {{cookiecutter.repo_url}}.git
 ```
+
+## Building the documentation
+
+### Requirements
+
+The application requires:
+
+- [Python](https://www.python.org/) ~= 3.11
+- [Poetry](https://python-poetry.org/) ~= 2.0
+
+### SysAdmin documentation
+
+You can build the SysAdmin documentation by running the following commands in the project root:
+
+```bash
+poetry install --only=docs
+poetry poe build-docs -p sysadmin html
+```
+
+The SysAdmin documentation will be generated in the folder `docs/_build/sysadmin/html`.
+
+### Developer documentation
+
+You can build the developer documentation by running the following commands in the project root:
+
+```bash
+poetry install --only=docs
+poetry poe build-docs -p dev html
+```
+
+The developer documentation will be generated in the folder `docs/_build/dev/html`.
 
 ## Setting up a development environment
 
@@ -23,4 +56,72 @@ You can setup the Python development environment by running the following comman
 
 ```bash
 poetry install
+```
+
+### Database setup
+
+You can setup a sqlite development database by running the following command in the project root:
+
+```bash
+poetry poe migrate
+```
+
+### Execution
+
+You can execute the application in development mode by running the following command in the project root:
+
+```bash
+poetry poe dev
+```
+
+### Creation of a super user
+
+You can create a super user by running the following command in the project root:
+
+```bash
+poetry poe createsuperuser
+```
+
+## Setting up a docker development environment
+
+### Requirements
+
+The application requires:
+
+- [Python](https://www.python.org/) ~= 3.11
+- [Poetry](https://python-poetry.org/) ~= 2.0
+- [Docker](https://www.docker.com/) ~= 28.0
+- [Docker Compose](https://docs.docker.com/compose/) ~= 2.33
+
+### Python environment setup
+
+You can setup the Python development environment by running the following command in the project root:
+
+```bash
+poetry install
+```
+
+### Execution
+
+You can execute the application in development mode on docker by running the following command in the project root:
+
+```bash
+poetry poe dev-docker
+```
+
+### Execution of commands in the development container
+
+You can open the development container terminal by running the following command in the project root:
+
+```bash
+poetry poe bash-docker
+```
+
+### Creation of a super user
+
+You can create a super user by running the following commands in the project root:
+
+```bash
+poetry poe bash-docker
+poetry poe createsuperuser
 ```

@@ -2,6 +2,7 @@
 
 {{ cookiecutter.description }}
 
+- **Documentation:** {{ cookiecutter.sysadmindoc_url }}
 - **Downloads page:** {{ cookiecutter.downloads_url }}
 
 ## Requirements
@@ -24,6 +25,30 @@ pip install {{ cookiecutter.project_slug }}-X.X.X-py3-none-any.whl
 ```
 
 (Note: The X.X.X must be replaced by the version that you want to install.)
+
+## Database setup
+
+You can setup the database by running the following command:
+
+```bash
+{{ cookiecutter.project_slug }} migrate # or "python -m {{ cookiecutter.project_slug }} migrate"
+```
+
+## Execution
+
+You can quickly execute the application by running the following command:
+
+```bash
+{{ cookiecutter.project_slug }} runserver # or "python -m {{ cookiecutter.project_slug }} runserver"
+```
+
+## Creation of a super user
+
+You can create a super user by running the following command:
+
+```bash
+{{ cookiecutter.project_slug }} createsuperuser # or "python -m {{ cookiecutter.project_slug }} createsuperuser"
+```
 
 ## License
 
