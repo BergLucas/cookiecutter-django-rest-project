@@ -27,4 +27,4 @@ pip install {{ cookiecutter.project_slug }}-X.X.X-py3-none-any.whl
 
 ## License
 
-All code is licensed for others under a MIT license (see [LICENSE]({{ cookiecutter.repo_url }}/blob/main/LICENSE)).
+All code is licensed for others under a MIT license (see [LICENSE]({{ cookiecutter.license_url }})).
