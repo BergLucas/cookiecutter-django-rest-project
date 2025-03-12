@@ -14,6 +14,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
 ]
+include = [
+    "{{ cookiecutter.project_slug }}/static/**/*",
+    "{{ cookiecutter.project_slug }}/templates/**/*",
+    "NOTICE",
+]
 requires-python = ">=3.11,<4"
 dependencies = [
     "django (>=5.1.7,<6.0.0)",
