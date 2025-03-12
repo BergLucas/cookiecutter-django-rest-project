@@ -16,6 +16,9 @@ classifiers = [
 requires-python = ">=3.11"
 dependencies = []
 
+[project.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}:main"
+
 [tool.poetry]
 requires-poetry = "^2.0.0"
 packages = [{ include = "{{cookiecutter.project_slug}}", from = "src" }]
