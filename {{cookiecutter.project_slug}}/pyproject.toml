@@ -37,7 +37,6 @@ gunicorn = ["gunicorn (>=23.0.0,<24.0.0)"]
 waitress = ["waitress (>=3.0.2,<4.0.0)"]
 c = ["psycopg[c] (>=3.2.5,<4.0.0)"]
 
-
 [project.scripts]
 {{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}:main"
 
