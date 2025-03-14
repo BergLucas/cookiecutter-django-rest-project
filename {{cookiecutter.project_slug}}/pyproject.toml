@@ -75,6 +75,7 @@ check-nofix = "ruff check src tests"
 check-unsafe = "ruff check --fix --unsafe src tests"
 typecheck = "mypy src tests"
 lint = ["format", "check", "typecheck"]
+verify = ["lint", "test"]
 migrate = "python manage.py migrate"
 makemigrations = "python manage.py makemigrations"
 createsuperuser = "python manage.py createsuperuser"
