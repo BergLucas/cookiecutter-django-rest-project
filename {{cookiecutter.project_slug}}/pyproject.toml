@@ -42,6 +42,7 @@ check-nofix = "ruff check src tests"
 check-unsafe = "ruff check --fix --unsafe src tests"
 typecheck = "mypy src tests"
 lint = ["format", "check", "typecheck"]
+verify = ["lint", "test"]
 
 [tool.coverage.run]
 branch = true
