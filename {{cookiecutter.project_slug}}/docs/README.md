@@ -58,6 +58,60 @@ You can setup the Python development environment by running the following comman
 poetry install
 ```
 
+### Code verification
+
+You can use several commands to verify the quality of the code:
+
+#### Running the tests
+
+```bash
+poetry poe test
+```
+
+#### Running the tests with coverage
+
+```bash
+poetry poe coverage  # only generate coverage data
+# or
+poetry poe coverage-report  # generate and display coverage data
+# or
+poetry poe coverage-html  # generate coverage data and create an HTML report
+```
+
+#### Formatting the code
+
+```bash
+poetry poe format
+```
+
+#### Checking code for errors
+
+```bash
+poetry poe check  # check the code and fix errors
+# or
+poetry poe check-nofix  # check the code but do not fix errors
+# or
+poetry poe check-unsafe  # check the code and do unsafe errors fix
+```
+
+#### Typechecking the code
+
+```bash
+poetry poe typecheck
+```
+
+#### Linting the code
+
+```bash
+poetry poe lint  # format, check and typecheck the code
+```
+
+#### Verify the code
+
+```bash
+poetry poe verify  # format, check, typecheck and test the code
+```
+
 ### Database setup
 
 You can setup a sqlite development database by running the following command in the project root:
@@ -101,6 +155,10 @@ You can setup the Python development environment by running the following comman
 poetry install
 ```
 
+### Code verification
+
+You can use the same commands as in the classic Python environment to verify the quality of the code.
+
 ### Execution
 
 You can execute the application in development mode on docker by running the following command in the project root:
@@ -117,11 +175,4 @@ You can open the development container terminal by running the following command
 poetry poe bash-docker
 ```
 
-### Creation of a super user
-
-You can create a super user by running the following commands in the project root:
-
-```bash
-poetry poe bash-docker
-poetry poe createsuperuser
-```
+This will allow you to run the same commands as in the classic Python environment but inside the container. This may be necessary if the command requires access to the database.
