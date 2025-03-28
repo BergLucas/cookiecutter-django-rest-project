@@ -3,7 +3,7 @@ services:
   api:
     image: {{ cookiecutter.dockerhub_namespace }}/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }}
     networks:
-      - backend_network
+      - db_network
     depends_on:
       - db
 
@@ -12,10 +12,10 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - backend_network
+      - db_network
 
 volumes:
   db_data:
 
 networks:
-  backend_network:
+  db_network:
