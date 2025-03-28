@@ -23,7 +23,8 @@ RUN python -m venv $POETRY_HOME && \
 FROM development AS builder
 
 RUN apt-get update && \
-    apt-get install -y gcc libpq-dev
+    apt-get install -y gcc libpq-dev && \
+    poetry self add poetry-plugin-export~=1.9
 
 COPY pyproject.toml poetry.lock ./
 

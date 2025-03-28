@@ -47,7 +47,6 @@ packages = [{ include = "{{cookiecutter.project_slug}}", from = "src" }]
 [tool.poetry.requires-plugins]
 poethepoet = "^0.33.0"
 poetry-bumpversion = "^0.3.3"
-poetry-plugin-export = "^1.9.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.10"
