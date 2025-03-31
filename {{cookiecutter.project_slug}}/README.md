@@ -13,7 +13,15 @@ The application requires:
 
 ## Download & Installation
 
-There is only one way to download and install the application:
+There are two ways to download and install the application:
+
+### Using Git
+
+You can install the application using Git by running the following command:
+
+```bash
+pip install git+{{cookiecutter.repo_url}}.git
+```
 
 ### Using the GitHub releases
 
